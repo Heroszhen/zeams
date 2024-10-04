@@ -1,5 +1,7 @@
 {
   "name": "zeams",
+  "description": "zeams",
+  "author": "HERO Zhen",
   "version": "0.0.0",
   "nodejs": "18.19.0",
   "main": "main.js",
