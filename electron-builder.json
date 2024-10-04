@@ -1,0 +1,40 @@
+{
+    "productName": "ZBlog",
+    "directories": {
+      "output": "release/"
+    },
+    "files": [
+      "**/*",
+      "!**/*.ts",
+      "!.angular/",
+      "!cmd/",
+      "!doc/",
+      "!/release",
+      "!.github",
+      "!.vscode",
+      "!*.md",
+      "!package.json",
+      "!package-lock.json",
+      "!src/",
+      "!e2e/",
+      "!angular.json",
+      "!tsconfig*.json",
+      "!.eslintrc.json",
+      "!*.map"
+    ],
+    "win": {
+      "icon": "dist/zeams/browser/assets/icons",
+      "target": ["portable"]
+    },
+    "portable": {
+      "splashImage": "dist/zeams/browser/assets/icons/electron.bmp"
+    },
+    "mac": {
+      "icon": "dist/zeams/browser/assets/icons",
+      "target": ["dmg"]
+    },
+    "linux": {
+      "icon": "dist/zeams/browser/assets/icons",
+      "target": ["AppImage"]
+    }
+  }
