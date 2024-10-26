@@ -1,0 +1,6 @@
+@import '../styles/utils';
+
+#main-loader {
+    @include loader();
+    background: transparent;
+}

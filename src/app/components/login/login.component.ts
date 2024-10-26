@@ -7,7 +7,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 
-interface ILogin {
+export interface ILogin {
   email:string,
   password: string
 }
@@ -40,6 +40,13 @@ export class LoginComponent {
   }
 
   sendLogin() {
-    console.log(this.loginM)
+    this.apiService.postLogin(this.loginM).subscribe({
+      next: (data)=>{
+       
+      },
+      error:(err)=>{
+        
+      }
+    });
   }
 }

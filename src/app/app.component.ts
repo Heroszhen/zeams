@@ -11,12 +11,15 @@ import { ElectronService } from './services/electron.service';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'zeams';
+  loader: boolean;
 
   constructor(
     private readonly electronService: ElectronService,
     private readonly storeService: StoreService
   ) {
-    this.storeService.appEnv$.next([this.electronService.isElectron()])
+    this.storeService.appEnv$.next([this.electronService.isElectron()]);
+    this.storeService.loader$.subscribe((data:boolean[])=> {
+      this.loader = data[0];
+    })
   }
 }
