@@ -1,0 +1,34 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/utils.scss';
+
+#login {
+    width: 100%;
+    height: 100vh;
+    @include flex();
+    background-color: $gray;
+    .wrap-card {
+        width: 25%;
+    }
+}
+
+::ng-deep {
+    mat-card-header  {
+        .mat-mdc-card-header-text {
+            width:100%;
+            mat-card-title {
+                color: $blue;
+            }
+            mat-card-subtitle {
+                color: black;
+            }
+        }
+        
+    }
+}
+
+
+@media (max-width: 767px) {
+    .wrap-card {
+        width: 90% !important;
+    }
+}
