@@ -6,6 +6,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 export interface ILogin {
   email:string,
@@ -27,9 +28,12 @@ export class LoginComponent {
   hidden:boolean = true;
 
   constructor(
-    private readonly apiService: ApiService
+    private readonly apiService: ApiService,
+    private readonly router: Router
   ) {
-    
+    if(![null, ''].includes(localStorage.getItem('token'))) {
+      this.router.navigate(["/accueil"]);
+    }
   }
 
   resetLoginM(): ILogin{
@@ -42,7 +46,8 @@ export class LoginComponent {
   sendLogin() {
     this.apiService.postLogin(this.loginM).subscribe({
       next: (data)=>{
-       
+       localStorage.setItem('token', data['token']);
+       this.router.navigate(["/accueil"]);
       },
       error:(err)=>{
         

@@ -1,0 +1,17 @@
+@import '../../../styles/utils.scss';
+
+#home {
+    width: 100%;
+    height: 100vh;
+    @include flex();
+
+    img {
+        width: 30%
+    }
+}
+
+@media (max-width: 767px) {
+    img {
+        width: 90% !important;
+    }
+}

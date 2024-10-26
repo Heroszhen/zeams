@@ -22,4 +22,8 @@ export class StoreService {
       horizontalPosition: 'center', 
     });
   }
+
+  deconnect() {
+    localStorage.removeItem('token');
+  }
 }
