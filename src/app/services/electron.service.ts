@@ -4,6 +4,7 @@ import * as remote from '@electron/remote';
 import * as childProcess from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
+import { AppEnvironnement } from '../interfaces/enums';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,9 @@ export class ElectronService {
       this.fs = window.require('fs');
       this.path = window.require('path');
     }
+  }
+
+  isElectron(): AppEnvironnement | null {
+    return !!(window && window.process && window.process.type) === true ? AppEnvironnement.Electron : AppEnvironnement.Web
   }
 }

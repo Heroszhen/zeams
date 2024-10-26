@@ -2,8 +2,8 @@ import { app, BrowserWindow, screen, globalShortcut, ipcMain } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
-// Initialize remote module
-require('@electron/remote/main').initialize();
+// // Initialize remote module
+// require('@electron/remote/main').initialize();
 
 let win: BrowserWindow|null = null;
 const args = process.argv.slice(1),
@@ -29,6 +29,11 @@ function createWindow(): BrowserWindow {
     //icon:path.join(__dirname,"/src/assets/icons/electron.bmp")//icon on Navigation bar
   });
   win.removeMenu();//remove Menu
+
+  // Initialize remote module
+  require('@electron/remote/main').initialize();
+  require('@electron/remote/main').enable(win.webContents);
+
   if (serve) {
     win.webContents.openDevTools();
 
