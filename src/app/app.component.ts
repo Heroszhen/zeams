@@ -11,6 +11,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
 import { ApiService } from './services/api.service';
+import { readFile } from './services/utils.service';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +27,8 @@ export class AppComponent {
   routes:string[] = ["/", "/connexion", "/accueil"];
   form:number|null = null
   profileM = new Profile();
+  file:File|null = null;
+  fileUrl:string = "";
 
   constructor(
     private readonly electronService: ElectronService,
@@ -58,13 +61,43 @@ export class AppComponent {
       this.profileM = new Profile();
       this.profileM.assignData(this.storeService.profile$.getValue()[0]);
     }
+
+    if (formType === 2) {
+      this.file = null;
+      this.fileUrl = "";
+    }
+
     this.form = formType;
   }
 
   sendName() {
     this.apiService.patchEditProfile(this.profileM).subscribe({
       next: (data)=>{
-        console.log(data)
+        this.storeService.profile$.next([data.data]);
+      },
+    });
+  }
+
+  async handleProfilePhoto(event:DragEvent | Event) {
+    event.preventDefault();
+    let file: File|null = null;
+    if (event instanceof DragEvent) {
+      file = event.dataTransfer?.files.item(0);
+    } else {
+      file = (event.target as HTMLInputElement)?.files.item(0);
+    }
+    if (file !== null && file.type.includes('image')) {
+      this.file = file;
+      this.fileUrl = await readFile(file);
+    }
+  }
+
+  sendProfilePhoto() {
+    let formData = new FormData();
+    formData.append('file', this.file);
+    this.apiService.postEditProfilePhoto(formData).subscribe({
+      next: (data)=>{
+        this.storeService.profile$.next([data.data]);
       },
     });
   }

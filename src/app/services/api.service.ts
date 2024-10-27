@@ -25,4 +25,8 @@ export class ApiService extends BaseService {
   patchEditProfile(data:Profile): Observable<{data:Profile}> {
     return this.http.patch<{data:Profile}>(`${this.baseUrl}/users/profile`, JSON.stringify(data), this.getHttpOptionsAuth());
   }
+
+  postEditProfilePhoto(data: FormData): Observable<{data:Profile}> {
+    return this.http.post<{data:Profile}>(`${this.baseUrl}/users/profile/photo`, data, this.getHttpOptionsAuth(null, true));
+  }
 }

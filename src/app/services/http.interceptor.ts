@@ -12,6 +12,7 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     tap((event) => {
       if (
+        !req.url.includes('login') &&
         ['POST', 'PATCH'].includes(req.method) &&
         event instanceof HttpResponse && 
         [200, 201].includes(event.status)
