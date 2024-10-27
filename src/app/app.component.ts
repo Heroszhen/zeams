@@ -5,11 +5,17 @@ import { ElectronService } from './services/electron.service';
 import { Router } from '@angular/router';
 import { filter, map } from 'rxjs';
 import { LeftNavComponent } from './components/left-nav/left-nav.component';
+import { Profile } from './models/profile';
+import { FormsModule } from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatButtonModule} from '@angular/material/button';
+import { ApiService } from './services/api.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LeftNavComponent],
+  imports: [RouterOutlet, LeftNavComponent, FormsModule, MatInputModule, MatFormFieldModule, MatButtonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -18,10 +24,13 @@ export class AppComponent {
   loader: boolean;
   currentRoute: string = "";
   routes:string[] = ["/", "/connexion", "/accueil"];
+  form:number|null = null
+  profileM = new Profile();
 
   constructor(
     private readonly electronService: ElectronService,
     private readonly storeService: StoreService,
+    private readonly apiService: ApiService,
     private readonly router: Router
   ) {
     this.storeService.appEnv$.next([this.electronService.isElectron()]);
@@ -41,6 +50,22 @@ export class AppComponent {
         next: (data:string)=>{
           this.currentRoute = data;
         }
+    });
+  }
+
+  toggleModal(formType:number|null = null) {
+    if (formType === 1) {
+      this.profileM = new Profile();
+      this.profileM.assignData(this.storeService.profile$.getValue()[0]);
+    }
+    this.form = formType;
+  }
+
+  sendName() {
+    this.apiService.patchEditProfile(this.profileM).subscribe({
+      next: (data)=>{
+        console.log(data)
+      },
     });
   }
 }

@@ -1,9 +1,62 @@
 @if (currentRoute !== "" && !routes.includes(currentRoute)) {
-    <app-left-nav></app-left-nav>
+    <app-left-nav (editProfile)="toggleModal($event)"></app-left-nav>
 }
 
 <router-outlet />
 
 @if (loader) {
     <div id="main-loader"></div>
+}
+
+@if (form !== null) {
+    <div class="material-modal" (click)="toggleModal()">
+        <div class="wrap" (click)="$event.stopPropagation()">
+            @if (form === 1) {
+                <form #prifoleNameForm="ngForm" (ngSubmit)="sendName()">
+                    <h4>Modifier mon nom</h4>
+                    <mat-form-field class="w-100">
+                        <mat-label>Nom</mat-label>
+                        <input 
+                            type="text" 
+                            matInput 
+                            id="name" 
+                            name="profile-name" 
+                            required 
+                            [(ngModel)]="profileM.name" 
+                            #profileName="ngModel"
+                            profileName
+                        >
+                        @if (profileName.invalid && (profileName.dirty || profileName.touched)) {
+                            <mat-error>Erreur</mat-error>
+                        }
+                    </mat-form-field>
+                    <mat-form-field class="w-100">
+                        <mat-label>Mail</mat-label>
+                        <input 
+                            type="email" 
+                            matInput 
+                            id="email" 
+                            name="email" 
+                            required 
+                            [(ngModel)]="profileM.email" 
+                            #email="ngModel"
+                            email
+                        >
+                        @if (email.invalid && (email.dirty || email.touched)) {
+                            <mat-error>Erreur</mat-error>
+                        }
+                    </mat-form-field>
+                    <div class="w-100 text-center">
+                        <button mat-flat-button color="primary" type="submit"  [disabled]="prifoleNameForm.form.invalid">Envoyer</button>
+                    </div>
+                </form>
+            }
+
+            @if (form === 2) {
+                <form #profilePhotoForm="ngForm" (ngSubmit)="sendName()">
+
+                </form>
+            }
+        </div>
+    </div>
 }

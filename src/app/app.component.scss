@@ -4,3 +4,21 @@
     @include loader();
     background: transparent;
 }
+
+.material-modal {
+    @include loader(200);
+    @include flex();
+    background-color: #00000052;
+    form {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 320px;
+        max-width: 95%;
+    }
+}
+
+mat-spinner {
+    margin: 0 auto;
+    margin-top: 10px;
+}

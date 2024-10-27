@@ -3,8 +3,11 @@
         <div class="wrap-profile">
             <img src="{{profile.photo}}" alt="" [matMenuTriggerFor]="menu">
             <mat-menu #menu="matMenu">
-                <button mat-menu-item>Editer mon nom</button>
-                <button mat-menu-item>Changer ma photo de profil</button>
+                <div mat-menu-item>
+                    Bonjour {{profile.name}}
+                </div>
+                <button mat-menu-item (click)="editProfile.emit(1)">Editer mon nom</button>
+                <button mat-menu-item (click)="editProfile.emit(2)">Changer ma photo de profil</button>
             </mat-menu>
         </div>
     }

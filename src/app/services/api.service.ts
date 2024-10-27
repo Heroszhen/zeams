@@ -21,4 +21,8 @@ export class ApiService extends BaseService {
   getGetProfile(): Observable<{data:Profile}> {
     return this.http.get<{data:Profile}>(`${this.baseUrl}/users/profile`, this.getHttpOptionsAuth());
   }
+
+  patchEditProfile(data:Profile): Observable<{data:Profile}> {
+    return this.http.patch<{data:Profile}>(`${this.baseUrl}/users/profile`, JSON.stringify(data), this.getHttpOptionsAuth());
+  }
 }

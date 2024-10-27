@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import {Router, RouterModule} from '@angular/router';
@@ -14,6 +14,7 @@ import { Profile } from '../../models/profile';
 })
 export class LeftNavComponent implements OnInit {
   profile:Profile;
+  @Output() editProfile = new EventEmitter<number>();
 
   constructor(
     private readonly storeService: StoreService,
@@ -22,7 +23,7 @@ export class LeftNavComponent implements OnInit {
 
   ngOnInit() {
     this.storeService.profile$.subscribe((data)=> {
-      this.profile = data[0];console.log(this.profile)
+      this.profile = data[0];
     })
   }
 
