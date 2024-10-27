@@ -1,5 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./styles/variables";
+
+img {
+    width: 100%;
+    height: auto;
+}
 
 app-root {
     min-height: 100vh;
+}
+
+.main-section {
+    width: 100%;
+    min-height: 100vh;
+    padding-left: $leftNavWidth;
+    background-color: $gray;
 }

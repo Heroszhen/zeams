@@ -1,3 +1,7 @@
+@if (currentRoute !== "" && !routes.includes(currentRoute)) {
+    <app-left-nav></app-left-nav>
+}
+
 <router-outlet />
 
 @if (loader) {

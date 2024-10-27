@@ -1,19 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NavigationEnd, RouterOutlet } from '@angular/router';
 import { StoreService } from './services/store.service';
 import { ElectronService } from './services/electron.service';
 import { Router } from '@angular/router';
 import { filter, map } from 'rxjs';
+import { LeftNavComponent } from './components/left-nav/left-nav.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, LeftNavComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppComponent {
   loader: boolean;
+  currentRoute: string = "";
+  routes:string[] = ["/", "/connexion", "/accueil"];
 
   constructor(
     private readonly electronService: ElectronService,
@@ -25,16 +29,17 @@ export class AppComponent {
       this.loader = data[0];
     });
     this.routerListener();
+
+    this.router.navigate(["/accueil"]);
   }
 
   routerListener(): void {
-    const routes:string[] = ["/", "/connexion", "accueil"];
     this.router.events.pipe(
       filter((event:any): event is NavigationEnd => event instanceof NavigationEnd),
       map((event: NavigationEnd) => event.url))
       .subscribe({
         next: (data:string)=>{
-         console.log(data)
+          this.currentRoute = data;
         }
     });
   }

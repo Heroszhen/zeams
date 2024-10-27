@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AppEnvironnement } from '../interfaces/enums';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Profile } from '../models/profile';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class StoreService {
   appEnv$ = new BehaviorSubject<(AppEnvironnement|null)[]>([null]);
   loader$ = new BehaviorSubject<boolean[]>([false]);
+  profile$ = new BehaviorSubject<Profile[]>([new Profile()]);
 
   constructor(
     private readonly snackBar: MatSnackBar

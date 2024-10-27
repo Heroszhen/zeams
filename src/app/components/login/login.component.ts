@@ -49,9 +49,7 @@ export class LoginComponent {
        localStorage.setItem('token', data['token']);
        this.router.navigate(["/accueil"]);
       },
-      error:(err)=>{
-        
-      }
+      error:(err)=>{}
     });
   }
 }
