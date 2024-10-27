@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ILogin } from '../components/login/login.component';
 import { Observable } from 'rxjs';
 import { Profile } from '../models/profile';
+import { IResponseInterlocutors } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +29,9 @@ export class ApiService extends BaseService {
 
   postEditProfilePhoto(data: FormData): Observable<{data:Profile}> {
     return this.http.post<{data:Profile}>(`${this.baseUrl}/users/profile/photo`, data, this.getHttpOptionsAuth(null, true));
+  }
+
+  getGetInterlocutors(): Observable<IResponseInterlocutors> {
+    return this.http.get<IResponseInterlocutors>(`${this.baseUrl}/users/interlocutors`, this.getHttpOptionsAuth());
   }
 }
