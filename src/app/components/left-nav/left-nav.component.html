@@ -1,7 +1,11 @@
 <section id="left-nav">
     @if (profile._id !== null) {
         <div class="wrap-profile">
-            <img src="{{profile.photo}}" alt="" [matMenuTriggerFor]="menu">
+            @if (profile.photo === null) {
+                <img src="assets/photos/profile.png" alt="" [matMenuTriggerFor]="menu">
+            } @else {
+                <img src="{{profile.photo}}" alt="" [matMenuTriggerFor]="menu">
+            }
             <mat-menu #menu="matMenu">
                 <div mat-menu-item>
                     Bonjour {{profile.name}}

@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { AppEnvironnement } from '../interfaces/enums';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Profile } from '../models/profile';
+import { IInterlocutor } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ export class StoreService {
   appEnv$ = new BehaviorSubject<(AppEnvironnement|null)[]>([null]);
   loader$ = new BehaviorSubject<boolean[]>([false]);
   profile$ = new BehaviorSubject<Profile[]>([new Profile()]);
+  interlocutors$ = new BehaviorSubject<IInterlocutor[]>([]);
 
   constructor(
     private readonly snackBar: MatSnackBar
