@@ -1,3 +1,27 @@
-<section class="main-section">
-
+<section class="main-section" id="chat">
+    <section id="section-interlocutors">
+        <section class="header">Chat</section>
+        <section class="body">
+            <div *ngFor="let item of interlocutors;let key = index;" class="interlocutor" [ngClass]="{'active': key === indexCurrent}">
+                <div class="wrap-photo">
+                    @if (item.photo !== null) {
+                        <img src="{{item.photo}}" alt="">
+                    } @else {
+                        <img src="assets/photos/profile.png" alt="">
+                    }
+                </div>
+                <div class="wrap-name">
+                    <div>{{item.name}}</div>
+                    <div></div>
+                </div>
+                <div class="wrap-date">
+                    {{getLastDate(item._id)|date:'dd/MM/YYYY'}}
+                </div>
+            </div>
+        </section>
+    </section>
+    <section id="section-conversations">
+        <section class="header"></section>
+        <section class="body"></section>
+    </section>
 </section>

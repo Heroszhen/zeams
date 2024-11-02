@@ -6,5 +6,5 @@ export class Conversation extends Model {
     file: [] = [];
     sender?: string;
     receiver?: string;
-    created?: string;
+    created: string;
 }

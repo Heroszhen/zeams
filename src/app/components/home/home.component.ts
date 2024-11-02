@@ -3,6 +3,7 @@ import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
 import { StoreService } from '../../services/store.service';
 import { IInterlocutor } from '../../interfaces/interfaces';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-home',
@@ -15,11 +16,13 @@ export class HomeComponent implements OnInit {
   constructor(
     private readonly apiService: ApiService,
     private readonly storeService: StoreService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly socketService: SocketService
   ) {
+    this.socketService.setSocket();
     setTimeout(() => {
       this.router.navigate(["/chat"]);
-    }, 5000);
+    }, 1000);
   }
 
   ngOnInit() {

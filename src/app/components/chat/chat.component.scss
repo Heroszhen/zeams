@@ -1,0 +1,68 @@
+@import "../../../styles/utils";
+
+$sectionInterlocutorsWidth: 300px;
+#chat {
+    height: 100vh;
+    overflow: hidden;
+    @include flex(flex-start);
+    >section {
+        height: inherit;
+        .header {
+            height: 50px;
+            @include flex(flex-start);
+            padding: 5px;
+            border-bottom: 1px solid rgb(231, 231, 231);
+        }
+        .body {
+            height: calc(100% - 50px);
+            padding-top: 5px;
+            padding-bottom: 5px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+    }
+
+    #section-interlocutors {
+        width: $sectionInterlocutorsWidth;
+        .header {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .body {
+            .interlocutor {
+                padding: 5px;
+                @include flex(flex-start);
+                cursor: pointer;
+                height: 50px;
+                >div {
+                    height: inherit;
+                    @include flex(flex-start);
+                }
+                &:hover, &.active {
+                    background-color: white;
+                }
+                .wrap-photo {
+                    position: relative;
+                    width: 40px;
+                    img {
+                        border-radius: 50%;
+                    }
+                }
+                .wrap-name {
+                    width: calc(100% - 40px - 60px);
+                    padding-left: 5px;
+                    padding-right: 5px;
+                }
+                .wrap-date {
+                    width: 60px;
+                    justify-content: flex-end;
+                }
+            }
+        }
+    }
+
+    #section-conversations {
+        width: calc(100% - $sectionInterlocutorsWidth);
+        background-color: white;
+    }
+}

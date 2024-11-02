@@ -3,7 +3,9 @@ import { Conversation } from "../models/conversation"
 export interface IInterlocutor {
     _id: string,
     name: string,
-    photo: string|null
+    photo: string|null,
+    created: string,
+    state?: string
 }
 
 
