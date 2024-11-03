@@ -43,6 +43,28 @@
                                 <div class="wrap-text" [innerHTML]="item.text" *ngIf="item.text !== ''"></div>
                             </div>
                         </div>
+                        @for (file of item.files; track file ; let key2 = $index) {
+                            @if (file.fileType.includes('image')) {
+                                <div class="wrap-conversation" [ngClass]="{'right':item.sender !==interlocutors[indexCurrent]._id}">
+                                    <div class="wrap-profile-photo" *ngIf="item.sender===interlocutors[indexCurrent]._id">
+                                        @if (interlocutors[indexCurrent].photo !== null) {
+                                            <img src="{{interlocutors[indexCurrent].photo}}" alt="">
+                                        } @else {
+                                            <img src="assets/photos/profile.png" alt="">
+                                        }
+                                    </div>
+                                    <div class="wrap-message">
+                                        <div *ngIf="item.sender===interlocutors[indexCurrent]._id">
+                                            {{interlocutors[indexCurrent].name}}
+                                        </div>
+                                        <div class="wrap-created">{{interlocutors[indexCurrent].created | date:'dd/MM/YYYY'}}</div>
+                                        <div class="wrap-image">
+                                            <img src="{{file.link}}">
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
                     }
                 }
             </section>
@@ -81,4 +103,5 @@
         </section>
     </section>
 </section>
+
 <input type="file" id="message-files" name="message-files" class="d-none" (change)="handleInputFiles($event)" #btnInputFiles multiple>

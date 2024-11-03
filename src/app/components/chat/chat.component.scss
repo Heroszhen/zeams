@@ -79,7 +79,8 @@ $sectionInterlocutorsWidth: 300px;
                 padding: 10px 20px;
                 .wrap-conversation {
                     @include flex(flex-start, flex-start);
-                    margin-bottom: 20px;
+                    margin-bottom: 30px;
+                    padding-right: 30%;
                     .wrap-profile-photo {
                         img {
                             width: 80px;
@@ -99,14 +100,23 @@ $sectionInterlocutorsWidth: 300px;
                             clear: both;
                             word-wrap: break-word;
                         }
+                        .wrap-image {
+                            max-width: 500px;
+                            margin-top: 10px;
+                        }
                     }
                     &.right {
                         @include flex(flex-end, flex-start);
+                        padding-right: 0 !important;
+                        padding-left: 30%;
                         .wrap-created {
                             text-align: right;
                         }
                         .wrap-text {
                             background-color: gainsboro !important;
+                            .wrap-image {
+                                text-align: right;
+                            }
                         }
                     }
                 }
@@ -162,6 +172,25 @@ $sectionInterlocutorsWidth: 300px;
                     .wrap-btn-submit {
                         color: $blue;
                     }
+                }
+            }
+        }
+    }
+}
+
+
+@media (max-width: 767px) {
+    #chat {
+        #section-interlocutors {
+            width: 0;
+        }
+        #section-conversations {
+            width: 100%;
+            .wrap-conversation {
+                padding-right: 10% !important;
+                &.right {
+                    padding-right: 0 !important;
+                    padding-left: 10% !important;
                 }
             }
         }

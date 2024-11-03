@@ -27,6 +27,10 @@
         <mat-icon aria-hidden="false" fontIcon="phone"></mat-icon>
         <div class="name">Appels</div>
     </div>
+    <div class="route" [routerLink]="['/accueil']" routerLinkActive="active">
+        <mat-icon aria-hidden="false" fontIcon="loop"></mat-icon>
+        <div class="name">Recharger</div>
+    </div>
     <div class="route" (click)="deconnect()">
         <mat-icon aria-hidden="false" fontIcon="logout"></mat-icon>
         <div class="name">Déconnexion</div>
