@@ -29,6 +29,7 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
       
       if (error.status === 401) {//unauthenticated
         //empty all and go to login page
+        storeService.deconnect();
         //router.navigate(["/connexion"]);
       } 
 

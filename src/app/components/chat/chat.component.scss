@@ -117,9 +117,7 @@ $sectionInterlocutorsWidth: 300px;
                             }
                             .file-name {
                                 max-width:230px;
-                                white-space: nowrap;
-                                overflow: hidden;
-                                text-overflow: ellipsis;
+                                @include textOverflow();
                                 padding-left: 10px;
                                 padding-right: 10px;
                             }

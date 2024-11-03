@@ -29,6 +29,5 @@ export class LeftNavComponent implements OnInit {
 
   deconnect() {
     this.storeService.deconnect();
-    window.location.reload();
   }
 }

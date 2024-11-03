@@ -31,6 +31,7 @@ export class StoreService {
 
   deconnect() {
     localStorage.removeItem('token');
+    window.location.reload();
   }
 
   updateInterlocutor(profile:IInterlocutor) {
