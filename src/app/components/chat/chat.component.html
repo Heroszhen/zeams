@@ -2,7 +2,7 @@
     <section id="section-interlocutors">
         <section class="header">Chat</section>
         <section class="body">
-            <div *ngFor="let item of interlocutors;let key = index;" class="interlocutor" [ngClass]="{'active': key === indexCurrent}">
+            <div *ngFor="let item of interlocutors;let key = index;" class="interlocutor" [ngClass]="{'active': key === indexCurrent}" (click)="this.indexCurrent=key">
                 <div class="wrap-photo">
                     @if (item.photo !== null) {
                         <img src="{{item.photo}}" alt="">
@@ -21,7 +21,64 @@
         </section>
     </section>
     <section id="section-conversations">
-        <section class="header"></section>
-        <section class="body"></section>
+        <section class="header">
+        </section>
+        <section class="body">
+            <section id="list-conversations" class="scrollbar">
+                @for (item of conversations; track item ; let key = $index) {
+                    @if([item.sender, item.receiver].includes(interlocutors[indexCurrent]._id)) {
+                        <div class="wrap-conversation" [ngClass]="{'right':item.sender !==interlocutors[indexCurrent]._id}">
+                            <div class="wrap-profile-photo" *ngIf="item.sender===interlocutors[indexCurrent]._id">
+                                @if (interlocutors[indexCurrent].photo !== null) {
+                                    <img src="{{interlocutors[indexCurrent].photo}}" alt="">
+                                } @else {
+                                    <img src="assets/photos/profile.png" alt="">
+                                }
+                            </div>
+                            <div class="wrap-message">
+                                <div *ngIf="item.sender===interlocutors[indexCurrent]._id">
+                                    {{interlocutors[indexCurrent].name}}
+                                </div>
+                                <div class="wrap-created">{{interlocutors[indexCurrent].created | date:'dd/MM/YYYY'}}</div>
+                                <div class="wrap-text" [innerHTML]="item.text" *ngIf="item.text !== ''"></div>
+                            </div>
+                        </div>
+                    }
+                }
+            </section>
+            
+            <section id="wrap-editor">
+                <div class="NgxEditor__Wrapper">
+                    <ngx-editor-menu [editor]="editor"  [toolbar]="toolbar"> </ngx-editor-menu>
+                    <ngx-editor
+                      [editor]="editor"
+                      [(ngModel)]="messageM.text"
+                      [disabled]="false"
+                    ></ngx-editor>
+                </div>
+                @if (messageM.files.length > 0) {
+                    <div class="wrap-files">
+                        @for (item of messageM.files; track item ; let i = $index) {
+                            <div class="file-to-upload">
+                                <mat-icon aria-hidden="false" fontIcon="insert_drive_file"></mat-icon>
+                                <div class="file-name">{{item.name}}</div>
+                                <mat-icon aria-hidden="false" fontIcon="clear" (click)="this.messageM.files.splice(i, 1)"></mat-icon>
+                            </div>
+                        }
+                    </div>
+                }
+                <div class="wrap-btns">
+                    <div class="list-btns">
+                        <mat-icon aria-hidden="false" fontIcon="attach_file" matTooltip="5 fichiers au max" (click)="btnInputFiles.click()"></mat-icon>
+                        <mat-icon aria-hidden="false" fontIcon="mic"></mat-icon>
+                        <mat-icon aria-hidden="false" fontIcon="delete_forever" matTooltip="Reset" (click)="resetMessageM()"></mat-icon>
+                    </div>
+                    <div class="wrap-btn-submit">
+                        <mat-icon aria-hidden="false" fontIcon="send" matTooltip="Envoyer" (click)="sendMessage()"></mat-icon>
+                    </div>
+                </div>
+            </section>
+        </section>
     </section>
 </section>
+<input type="file" id="message-files" name="message-files" class="d-none" (change)="handleInputFiles($event)" #btnInputFiles multiple>

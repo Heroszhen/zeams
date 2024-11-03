@@ -1,4 +1,5 @@
 @import "../../../styles/utils";
+@import "../../../styles/_variables";
 
 $sectionInterlocutorsWidth: 300px;
 #chat {
@@ -17,8 +18,6 @@ $sectionInterlocutorsWidth: 300px;
             height: calc(100% - 50px);
             padding-top: 5px;
             padding-bottom: 5px;
-            overflow-x: hidden;
-            overflow-y: auto;
         }
     }
 
@@ -29,6 +28,8 @@ $sectionInterlocutorsWidth: 300px;
             font-weight: bold;
         }
         .body {
+            overflow-x: hidden;
+            overflow-y: auto;
             .interlocutor {
                 padding: 5px;
                 @include flex(flex-start);
@@ -52,10 +53,15 @@ $sectionInterlocutorsWidth: 300px;
                     width: calc(100% - 40px - 60px);
                     padding-left: 5px;
                     padding-right: 5px;
+                    flex-wrap: wrap;
+                    >div {
+                        width: 100%;
+                    }
                 }
                 .wrap-date {
                     width: 60px;
                     justify-content: flex-end;
+                    font-size:13px;
                 }
             }
         }
@@ -64,5 +70,100 @@ $sectionInterlocutorsWidth: 300px;
     #section-conversations {
         width: calc(100% - $sectionInterlocutorsWidth);
         background-color: white;
+        .body {
+            position: relative;
+            #list-conversations {
+                height: calc(100% - 130px);
+                overflow-x: hidden;
+                overflow-y: auto;
+                padding: 10px 20px;
+                .wrap-conversation {
+                    @include flex(flex-start, flex-start);
+                    margin-bottom: 20px;
+                    .wrap-profile-photo {
+                        img {
+                            width: 80px;
+                            border-radius: 50%;
+                        }
+                    }
+                    .wrap-message {
+                        padding-left: 10px;
+                        .wrap-created {
+                            font-size:12px;
+                            color:gray
+                        }
+                        .wrap-text {
+                            padding: 20px;
+                            border-radius: 10px;
+                            background-color: #b8b9ff;
+                            clear: both;
+                            word-wrap: break-word;
+                        }
+                    }
+                    &.right {
+                        @include flex(flex-end, flex-start);
+                        .wrap-created {
+                            text-align: right;
+                        }
+                        .wrap-text {
+                            background-color: gainsboro !important;
+                        }
+                    }
+                }
+            }
+            
+            #wrap-editor {
+                position: absolute;
+                left: 0;
+                bottom:2px;
+                width: 100%;
+                padding-left: 10px;
+                padding-right: 10px;
+                >div {
+                    width: 100%;
+                }
+                .wrap-files {
+                    padding: 10px;
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+                    border: 1px solid rgb(199 199 199);
+                    border-radius: 5px;
+                    @include flex(flex-start);
+                    .file-to-upload {
+                        @include flex(flex-start);
+                        background-color: gainsboro;
+                        border-radius: 3px;
+                        padding: 5px 8px;
+                        margin-right: 5px;
+                        .file-name {
+                            max-width:230px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                        mat-icon[data-mat-icon-name="clear"]:hover {
+                            cursor: pointer;
+                            color: red;
+                        }
+                    }
+                }
+                .wrap-btns {
+                    padding: 3px;
+                    mat-icon {
+                        cursor: pointer;
+                    }
+                    @include flex(flex-start);
+                    .list-btns {
+                        width: calc(100% - 25px);
+                        mat-icon {
+                            margin-right: 3px;
+                        }
+                    }
+                    .wrap-btn-submit {
+                        color: $blue;
+                    }
+                }
+            }
+        }
     }
 }

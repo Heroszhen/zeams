@@ -34,4 +34,8 @@ export class ApiService extends BaseService {
   getGetInterlocutors(): Observable<IResponseInterlocutors> {
     return this.http.get<IResponseInterlocutors>(`${this.baseUrl}/users/interlocutors`, this.getHttpOptionsAuth());
   }
+
+  postAddConversation(data: FormData) {
+    return this.http.post<{data:Profile}>(`${this.baseUrl}/conversations`, data, this.getHttpOptionsAuth(null, true));
+  }
 }

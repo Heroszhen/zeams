@@ -18,3 +18,12 @@ export interface IResponseInterlocutor {
     interlocutor: IInterlocutor,
     conversations: Conversation[]
 }
+
+export interface IFile {
+    originalName: string, 
+    newName: string,
+    fileType: string,
+    link: string,
+    created: string,
+    sender?: string,
+}

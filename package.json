@@ -36,6 +36,7 @@
     "@angular/router": "^17.1.0",
     "@electron/remote": "^2.1.2",
     "bootstrap": "^5.3.3",
+    "ngx-editor": "^17.5.4",
     "rxjs": "~7.8.0",
     "socket.io-client": "^4.8.1",
     "tslib": "^2.3.0",
