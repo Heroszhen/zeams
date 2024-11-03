@@ -65,12 +65,15 @@
                                         <div class="wrap-file">
                                             <mat-icon aria-hidden="false" fontIcon="insert_drive_file"></mat-icon>
                                             <div class="file-name">{{file.originalName}}</div>
-                                            <mat-icon aria-hidden="false" fontIcon="more_vert"></mat-icon>
+                                            <mat-icon aria-hidden="false" fontIcon="more_vert" id="file_dropdowns_{{key2}}" [matMenuTriggerFor]="menu"></mat-icon>
+                                            <mat-menu #menu="matMenu">
+                                                <button mat-menu-item >Visualiser</button>
+                                                <button mat-menu-item>Télécharger</button>
+                                            </mat-menu>
                                         </div>
                                     }
                                 </div>
                             </div>
-
                         }
                     }
                 }
