@@ -69,7 +69,7 @@
                 }
             </section>
             
-            <section id="wrap-editor">
+            <section id="wrap-editor" *ngIf="editor !== undefined && messageM !== undefined">
                 <div class="NgxEditor__Wrapper">
                     <ngx-editor-menu [editor]="editor"  [toolbar]="toolbar"> </ngx-editor-menu>
                     <ngx-editor

@@ -1,4 +1,4 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, ViewChild, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { StoreService } from '../../services/store.service';
 import { IInterlocutor } from '../../interfaces/interfaces';
 import { sortArrayByCreated } from '../../services/utils.service';
@@ -49,7 +49,8 @@ export class ChatComponent implements OnInit {
 
   constructor(
     private readonly storeService: StoreService,
-    private readonly apiService: ApiService
+    private readonly apiService: ApiService,
+    private readonly cdRef: ChangeDetectorRef
   ) { 
   }
 
@@ -60,6 +61,7 @@ export class ChatComponent implements OnInit {
     if (this.profile._id !== null) {
       this.storeService.interlocutors$.subscribe((data:IInterlocutor[]) => {
         this.interlocutors = sortArrayByCreated(data, 'desc');
+        this.cdRef.markForCheck();
       });
   
       this.storeService.conversations$.subscribe((data:Conversation[]) => {
@@ -81,6 +83,7 @@ export class ChatComponent implements OnInit {
   }
 
   resetMessageM() {
+    if (this.interlocutors.length === 0)return;
     this.messageM = new Message();
     this.messageM.sender = this.profile._id;
     this.messageM.receiver = this.interlocutors[this.indexCurrent]._id;

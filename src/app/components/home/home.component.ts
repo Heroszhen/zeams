@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
     private readonly router: Router,
     private readonly socketService: SocketService
   ) {
-    this.socketService.setSocket();
     setTimeout(() => {
       this.router.navigate(["/chat"]);
     }, 1000);
@@ -35,6 +34,7 @@ export class HomeComponent implements OnInit {
     this.apiService.getGetProfile().subscribe({
       next: (data)=>{
         this.storeService.profile$.next([data.data]);
+        this.socketService.setSocket();
         this.getDatas();
       },
     });

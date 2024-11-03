@@ -32,4 +32,10 @@ export class StoreService {
   deconnect() {
     localStorage.removeItem('token');
   }
+
+  updateInterlocutor(profile:IInterlocutor) {
+    let tab = this.interlocutors$.getValue();
+    tab = tab.map((item:IInterlocutor) => profile._id === item._id ? {...item, name: profile.name, photo: profile.photo} : item);
+    this.interlocutors$.next(tab);
+  }
 }

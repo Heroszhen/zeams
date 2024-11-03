@@ -12,6 +12,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
 import { ApiService } from './services/api.service';
 import { readFile } from './services/utils.service';
+import { SocketService } from './services/socket.service';
 
 @Component({
   selector: 'app-root',
@@ -34,7 +35,8 @@ export class AppComponent {
     private readonly electronService: ElectronService,
     private readonly storeService: StoreService,
     private readonly apiService: ApiService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly socketService: SocketService
   ) {
     this.storeService.appEnv$.next([this.electronService.isElectron()]);
     this.storeService.loader$.subscribe((data:boolean[])=> {
@@ -74,6 +76,7 @@ export class AppComponent {
     this.apiService.patchEditProfile(this.profileM).subscribe({
       next: (data)=>{
         this.storeService.profile$.next([data.data]);
+        this.socketService.setProfile();
       },
     });
   }
@@ -98,6 +101,7 @@ export class AppComponent {
     this.apiService.postEditProfilePhoto(formData).subscribe({
       next: (data)=>{
         this.storeService.profile$.next([data.data]);
+        this.socketService.setProfile();
       },
     });
   }

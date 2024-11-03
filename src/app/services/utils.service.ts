@@ -23,9 +23,8 @@ export function readFile(file:File): Promise<string> {
  * @returns {Array<Object>}
  */
 export function sortArrayByCreated <T extends {created: string}> (tab:T[], order:string): Array<T> {
-  tab.sort((current:T, next:T) => {
+  return tab.sort((current:T, next:T) => {
     if (order === 'asc') return new Date(current.created).getTime() - new Date(next.created).getTime();
     else return new Date(next.created).getTime() - new Date(current.created).getTime();
   });
-  return tab;
 }
