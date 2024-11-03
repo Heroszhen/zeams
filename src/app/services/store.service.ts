@@ -38,4 +38,9 @@ export class StoreService {
     tab = tab.map((item:IInterlocutor) => profile._id === item._id ? {...item, name: profile.name, photo: profile.photo} : item);
     this.interlocutors$.next(tab);
   }
+
+  addMessageInConversations(message:Conversation) {
+    let tab = this.conversations$.getValue();
+    this.conversations$.next([...tab, message]);
+  }
 }

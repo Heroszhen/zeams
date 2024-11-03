@@ -3,6 +3,8 @@ import { Socket, io } from 'socket.io-client';
 import { environment } from '../../environments/environment';
 import { StoreService } from './store.service';
 import { IInterlocutor } from '../interfaces/interfaces';
+import { Message } from '../models/message';
+import { Conversation } from '../models/conversation';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +31,7 @@ export class SocketService {
 
   setListeners() {
     this.listenProfile();
+    this.listenChatMessage();
   }
 
   listenProfile() {
@@ -37,4 +40,13 @@ export class SocketService {
     });
   }
 
+  sendChatMessage(message:Conversation) {
+    this.socket.emit("client:conversation:sendMessage", {message: message});
+  }
+
+  listenChatMessage() {
+    this.socket.on('server:conversation:sendMessage', (data:Conversation) => {
+      this.storeService.addMessageInConversations(data);
+    });
+  }
 }

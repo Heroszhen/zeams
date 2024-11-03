@@ -5,6 +5,7 @@ import { ILogin } from '../components/login/login.component';
 import { Observable } from 'rxjs';
 import { Profile } from '../models/profile';
 import { IResponseInterlocutors } from '../interfaces/interfaces';
+import { Conversation } from '../models/conversation';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,7 @@ export class ApiService extends BaseService {
     return this.http.get<IResponseInterlocutors>(`${this.baseUrl}/users/interlocutors`, this.getHttpOptionsAuth());
   }
 
-  postAddConversation(data: FormData) {
-    return this.http.post<{data:Profile}>(`${this.baseUrl}/conversations`, data, this.getHttpOptionsAuth(null, true));
+  postAddConversation(data: FormData): Observable<{conversation:Conversation}> {
+    return this.http.post<{conversation:Conversation}>(`${this.baseUrl}/conversations`, data, this.getHttpOptionsAuth(null, true));
   }
 }

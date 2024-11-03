@@ -1,7 +1,7 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, ViewChild, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { StoreService } from '../../services/store.service';
 import { IInterlocutor } from '../../interfaces/interfaces';
-import { sortArrayByCreated } from '../../services/utils.service';
+import { sortArrayByCreated, wait } from '../../services/utils.service';
 import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { Conversation } from '../../models/conversation';
 import { Profile } from '../../models/profile';
@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { ApiService } from '../../services/api.service';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-chat',
@@ -46,11 +47,13 @@ export class ChatComponent implements OnInit {
   ];
   colorPresets = ['red', '#FF0000', 'rgb(255, 0, 0)'];
   @ViewChild('btnInputFiles') btnInputFiles!: ElementRef<HTMLInputElement>;
+  @ViewChild('listConversations') listConversations!: ElementRef<HTMLElement>;
 
   constructor(
     private readonly storeService: StoreService,
     private readonly apiService: ApiService,
-    private readonly cdRef: ChangeDetectorRef
+    private readonly cdRef: ChangeDetectorRef,
+    private readonly socketService: SocketService
   ) { 
   }
 
@@ -63,13 +66,15 @@ export class ChatComponent implements OnInit {
         this.interlocutors = sortArrayByCreated(data, 'desc');
         this.cdRef.markForCheck();
       });
-  
-      this.storeService.conversations$.subscribe((data:Conversation[]) => {
-        this.conversations = data;
-      });
 
       this.resetMessageM();
       this.editor = new Editor();
+  
+      this.storeService.conversations$.subscribe((data:Conversation[]) => {
+        this.conversations = data;
+        this.cdRef.detectChanges();
+        this.scrollToBottom();
+      });
     }
   }
 
@@ -107,9 +112,18 @@ export class ChatComponent implements OnInit {
     for(let entry of this.messageM.files)formD.append("files", entry);
     this.apiService.postAddConversation(formD).subscribe({
       next: (data)=>{
-       
-       },
-       error:(err)=>{}
+        this.socketService.sendChatMessage(data.conversation);
+        this.resetMessageM();
+      },
+      error:(err)=>{}
+    });
+  }
+
+  async scrollToBottom() {
+    await wait(0.5);
+    this.listConversations.nativeElement.scrollTo({
+      top: this.listConversations.nativeElement.scrollHeight,
+      behavior: 'smooth'
     });
   }
 }

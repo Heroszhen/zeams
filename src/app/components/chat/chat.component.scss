@@ -104,6 +104,26 @@ $sectionInterlocutorsWidth: 300px;
                             max-width: 500px;
                             margin-top: 10px;
                         }
+                        .wrap-file {
+                            @include flex(flex-start);
+                            padding: 15px 20px;
+                            background-color: gainsboro;
+                            border-radius: 10px;
+                            mat-icon {
+                                transform: scale(1.3);
+                            }
+                            mat-icon[fonticon="more_vert"] {
+                                cursor: pointer;
+                            }
+                            .file-name {
+                                max-width:230px;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                padding-left: 10px;
+                                padding-right: 10px;
+                            }
+                        }
                     }
                     &.right {
                         @include flex(flex-end, flex-start);
