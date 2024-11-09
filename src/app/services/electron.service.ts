@@ -48,7 +48,7 @@ export class ElectronService {
         notification.close();
       }, 7000);
     } else {
-      
+      this.ipcRenderer.send('notification', [{title: title, text: newText}])
     }
   }
 }

@@ -1,4 +1,4 @@
-import { app, BrowserWindow, screen, globalShortcut, ipcMain } from 'electron';
+import { app, BrowserWindow, screen, globalShortcut, ipcMain, Notification } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
@@ -22,7 +22,7 @@ function createWindow(): BrowserWindow {
     webPreferences: {
       nodeIntegration: true,
       allowRunningInsecureContent: (serve) ? true : false,
-      contextIsolation: false,  // false if you want to run 2e2 test with Spectron
+      contextIsolation: false
     },
     //frame:false,//remove Navigation bar and  Menu
     fullscreen:true,
@@ -85,6 +85,15 @@ try {
         app.quit();
       }
     }
+  });
+
+  ipcMain.on('notification', (event, arg) => {
+    arg.forEach((item:{title:string, text:string}) => {
+      new Notification({
+        title: item.title,
+        body: item.text,
+      }).show();
+    });
   });
 } catch (e) {
 }
