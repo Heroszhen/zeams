@@ -35,8 +35,18 @@ export class StoreService {
   }
 
   updateInterlocutor(profile:IInterlocutor) {
+    if(profile === null)return;
+
     let tab = this.interlocutors$.getValue();
-    tab = tab.map((item:IInterlocutor) => profile._id === item._id ? {...item, name: profile.name, photo: profile.photo} : item);
+    let checked = false;
+    tab = tab.map((item:IInterlocutor) => { 
+      if (profile._id === item._id) {
+        checked = true;
+        return {...item, name: profile.name, photo: profile.photo}
+      }
+      return item
+    });
+    if(!checked)tab = [...tab, profile];
     this.interlocutors$.next(tab);
   }
 

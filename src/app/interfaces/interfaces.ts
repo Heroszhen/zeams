@@ -27,3 +27,8 @@ export interface IFile {
     created: string,
     sender?: string,
 }
+
+export interface IResponseConversation {
+    conversation:Conversation, 
+    interlocutor?: IInterlocutor
+}

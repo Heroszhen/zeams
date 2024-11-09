@@ -113,7 +113,7 @@ export class ChatComponent implements OnInit {
     for(let entry of this.messageM.files)formD.append("files", entry);
     this.apiService.postAddConversation(formD).subscribe({
       next: (data)=>{
-        this.socketService.sendChatMessage(data.conversation);
+        this.socketService.sendChatMessage(data);
         this.resetMessageM();
       },
       error:(err)=>{}

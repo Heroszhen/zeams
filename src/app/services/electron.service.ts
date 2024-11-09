@@ -5,6 +5,7 @@ import * as childProcess from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 import { AppEnvironnement } from '../interfaces/enums';
+import { Conversation } from '../models/conversation';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,20 @@ export class ElectronService {
 
   isElectron(): AppEnvironnement | null {
     return !!(window && window.process && window.process.type) === true ? AppEnvironnement.Electron : AppEnvironnement.Web
+  }
+
+  notifyMessage(title:string = '', text:string = '') {
+    const newText = text.replace(/<\/?[^>]+(>|$)/g, "");
+    if (this.isElectron() === AppEnvironnement.Web) {
+      const notification = new Notification(title, { 
+        body: newText,
+        icon: 'https://pic1.zhuanstatic.com/zhuanzh/50b6ffe4-c7e3-4317-bc59-b2ec4931f325.png'
+      });
+      setTimeout(() => {
+        notification.close();
+      }, 7000);
+    } else {
+      
+    }
   }
 }

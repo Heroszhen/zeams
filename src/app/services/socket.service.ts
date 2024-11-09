@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Socket, io } from 'socket.io-client';
 import { environment } from '../../environments/environment';
 import { StoreService } from './store.service';
-import { IInterlocutor } from '../interfaces/interfaces';
+import { IInterlocutor, IResponseConversation } from '../interfaces/interfaces';
 import { Message } from '../models/message';
 import { Conversation } from '../models/conversation';
+import { ElectronService } from './electron.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,10 @@ export class SocketService {
   socket:Socket;
   socketId: string = '';
 
-  constructor(private readonly storeService: StoreService) { }
+  constructor(
+    private readonly storeService: StoreService,
+    private readonly electronService: ElectronService
+  ) { }
 
   setSocket() {
     this.socket = io(environment.baseUrl.replace("/api", ''));
@@ -40,13 +44,23 @@ export class SocketService {
     });
   }
 
-  sendChatMessage(message:Conversation) {
-    this.socket.emit("client:conversation:sendMessage", {message: message});
+  sendChatMessage(data: IResponseConversation) {
+    this.socket.emit("client:conversation:sendMessage", data);
   }
 
   listenChatMessage() {
-    this.socket.on('server:conversation:sendMessage', (data:Conversation) => {
-      this.storeService.addMessageInConversations(data);
+    this.socket.on('server:conversation:sendMessage', (data:IResponseConversation) => {
+      if(data.interlocutor)this.storeService.updateInterlocutor(data.interlocutor);
+      this.storeService.addMessageInConversations(data.conversation);
+      if (data.conversation.receiver === this.storeService.profile$.getValue()[0]._id) {
+        let text = data.conversation.text === '' ? "Vous avec reçu des fichiers" : data.conversation.text;
+        for(let entry of this.storeService.interlocutors$.getValue()) {
+          if (entry._id === data.conversation.sender){
+            this.electronService.notifyMessage(entry.name, text)
+            break;
+          }
+        }
+      }
     });
   }
 }

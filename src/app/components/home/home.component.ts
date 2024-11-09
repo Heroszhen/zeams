@@ -21,10 +21,18 @@ export class HomeComponent implements OnInit {
   ) {
     setTimeout(() => {
       this.router.navigate(["/chat"]);
-    }, 1000);
+    }, 2000);
   }
 
   ngOnInit() {
+    Notification.requestPermission().then(permission => {
+      if (permission === "granted") {
+        // Permission granted
+      } else {
+        this.storeService.openSnackBar("Notification permission non requise");
+      }
+    });
+
     setTimeout(() => {
       this.getProfile();
     }, 500);
