@@ -88,12 +88,10 @@ try {
   });
 
   ipcMain.on('notification', (event, arg) => {
-    arg.forEach((item:{title:string, text:string}) => {
-      new Notification({
-        title: item.title,
-        body: item.text,
-      }).show();
-    });
+    new Notification({
+      title: arg.title,
+      body: arg.text,
+    }).show();
   });
 } catch (e) {
 }
