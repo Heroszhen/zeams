@@ -1,4 +1,4 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, ViewChild, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, ViewChild, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef, AfterViewInit, OnDestroy, Renderer2 } from '@angular/core';
 import { StoreService } from '../../services/store.service';
 import { IInterlocutor } from '../../interfaces/interfaces';
 import { sortArrayByCreated, wait } from '../../services/utils.service';
@@ -23,7 +23,7 @@ import {MatMenuModule} from '@angular/material/menu';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   interlocutors: IInterlocutor[] = [];
   indexCurrent: number = 0;
   conversations: Conversation[] = [];
@@ -49,12 +49,14 @@ export class ChatComponent implements OnInit {
   colorPresets = ['red', '#FF0000', 'rgb(255, 0, 0)'];
   @ViewChild('btnInputFiles') btnInputFiles!: ElementRef<HTMLInputElement>;
   @ViewChild('listConversations') listConversations!: ElementRef<HTMLElement>;
+  private unlistener!: () => void;
 
   constructor(
     private readonly storeService: StoreService,
     private readonly apiService: ApiService,
     private readonly cdRef: ChangeDetectorRef,
-    private readonly socketService: SocketService
+    private readonly socketService: SocketService,
+    private readonly renderer2: Renderer2,
   ) { 
   }
 
@@ -77,6 +79,20 @@ export class ChatComponent implements OnInit {
         this.scrollToBottom();
       });
     }
+
+    
+  }
+
+  ngAfterViewInit() {
+    this.unlistener = this.renderer2.listen(this.listConversations.nativeElement, 'scroll', (e) => {
+      if(e.target.scrollTop === 0) {
+
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.unlistener()
   }
 
   getLastDate(id:string): string | null {
