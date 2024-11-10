@@ -1,4 +1,4 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, ViewChild, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef, AfterViewInit, OnDestroy, Renderer2 } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, ViewChild, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef, AfterViewInit, OnDestroy, Renderer2, ViewChildren, QueryList } from '@angular/core';
 import { StoreService } from '../../services/store.service';
 import { IInterlocutor } from '../../interfaces/interfaces';
 import { sortArrayByCreated, wait } from '../../services/utils.service';
@@ -53,6 +53,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('listConversations') listConversations!: ElementRef<HTMLElement>;
   private unlistener!: () => void;
   canScrollToBottom:boolean = true;
+  @ViewChildren('appChatMessage') appChatMessage!: QueryList<ChatmessageComponent>;
 
   constructor(
     private readonly storeService: StoreService,
@@ -88,8 +89,8 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.unlistener = this.renderer2.listen(this.listConversations.nativeElement, 'scroll', (e) => {
-      if(e.target.scrollTop === 0) {
-
+      if(e.target.scrollTop === 0 && this.appChatMessage.length > 0) {
+        const index = this.appChatMessage.first.dataIndex;
       }
     });
   }
