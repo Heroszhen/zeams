@@ -14,11 +14,12 @@ import { ApiService } from '../../services/api.service';
 import { SocketService } from '../../services/socket.service';
 import {MatMenuModule} from '@angular/material/menu';
 import { ChatmessageComponent } from '../chatmessage/chatmessage.component';
+import { OrderByCreatedPipe } from '../../pipes/order-by-created.pipe';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [NgFor, DatePipe, NgClass, NgxEditorModule, FormsModule, MatIconModule, MatTooltipModule, NgIf, MatMenuModule, ChatmessageComponent],
+  imports: [NgFor, DatePipe, NgClass, NgxEditorModule, FormsModule, MatIconModule, MatTooltipModule, NgIf, MatMenuModule, ChatmessageComponent, OrderByCreatedPipe],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

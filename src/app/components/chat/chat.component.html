@@ -25,7 +25,7 @@
         </section>
         <section class="body">
             <section id="list-conversations" class="scrollbar" #listConversations>
-                @for (item of conversations; track item ; let key = $index) {
+                @for (item of conversations | orderByCreated: 'created': 'asc'; track item ; let key = $index) {
                     @if([item.sender, item.receiver].includes(interlocutors[indexCurrent]._id)) {
                         @if (item.text !== '') {
                             <app-chatmessage 
