@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Profile } from '../../models/profile';
 import { Subscription } from 'rxjs';
 import { StoreService } from '../../services/store.service';
@@ -13,7 +13,8 @@ import {MatMenuModule} from '@angular/material/menu';
   standalone: true,
   imports: [NgClass, NgIf, DatePipe, MatIconModule, MatMenuModule],
   templateUrl: './chatmessage.component.html',
-  styleUrl: './chatmessage.component.scss'
+  styleUrl: './chatmessage.component.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ChatmessageComponent implements OnInit, OnDestroy {
   profile:Profile;
@@ -21,6 +22,7 @@ export class ChatmessageComponent implements OnInit, OnDestroy {
   @Input() interlocutor: IInterlocutor;
   @Input() conversation: Conversation;
   @Input() messageType: string;
+  @Input() dataIndex:number;
 
   constructor(private storeService: StoreService) {}
 

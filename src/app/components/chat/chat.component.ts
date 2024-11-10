@@ -52,6 +52,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('btnInputFiles') btnInputFiles!: ElementRef<HTMLInputElement>;
   @ViewChild('listConversations') listConversations!: ElementRef<HTMLElement>;
   private unlistener!: () => void;
+  canScrollToBottom:boolean = true;
 
   constructor(
     private readonly storeService: StoreService,
@@ -139,6 +140,8 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async scrollToBottom() {
+    if (!this.canScrollToBottom)return;
+    
     await wait(0.5);
     this.listConversations.nativeElement.scrollTo({
       top: this.listConversations.nativeElement.scrollHeight,

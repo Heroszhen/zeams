@@ -32,6 +32,7 @@
                                 [interlocutor]='interlocutors[indexCurrent]'
                                 [conversation]='item'
                                 [messageType]="'text'"
+                                [dataIndex]="key"
                             ></app-chatmessage>
                         } 
                         @if (item.files.length !== 0) {
