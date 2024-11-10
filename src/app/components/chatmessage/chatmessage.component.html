@@ -1,0 +1,39 @@
+<div class="wrap-conversation" [ngClass]="{'right':conversation.sender !==interlocutor._id}">
+    <div class="wrap-profile-photo" *ngIf="conversation.sender===interlocutor._id">
+        @if (interlocutor.photo !== null) {
+            <img src="{{interlocutor.photo}}" alt="">
+        } @else {
+            <img src="assets/photos/profile.png" alt="">
+        }
+    </div>
+    <div class="wrap-message">
+        <div *ngIf="conversation.sender===interlocutor._id">
+            {{interlocutor.name}}
+        </div>
+        <div class="wrap-created">{{interlocutor.created | date:'dd/MM/YYYY HH:mm:ss'}}</div>
+        @if (messageType === 'text') {
+            <div class="wrap-text" [innerHTML]="conversation.text"></div>
+        } 
+        @if (messageType === 'file') {
+            @for (file of conversation.files; track file ; let key2 = $index) {
+                @if (file.fileType.includes('image')) {
+                    <div class="wrap-image">
+                        <img src="{{file.link}}">
+                    </div>
+                } @else {
+                    <div class="wrap-file">
+                        <div class="wrap">
+                            <mat-icon aria-hidden="false" fontIcon="insert_drive_file"></mat-icon>
+                            <div class="file-name">{{file.originalName}}</div>
+                            <mat-icon aria-hidden="false" fontIcon="more_vert" id="file_dropdowns_{{key2}}" [matMenuTriggerFor]="menu"></mat-icon>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item >Visualiser</button>
+                                <button mat-menu-item>Télécharger</button>
+                            </mat-menu>
+                        </div>
+                    </div>
+                }
+            }
+        } 
+    </div>
+</div>

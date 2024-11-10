@@ -27,22 +27,23 @@
             <section id="list-conversations" class="scrollbar" #listConversations>
                 @for (item of conversations; track item ; let key = $index) {
                     @if([item.sender, item.receiver].includes(interlocutors[indexCurrent]._id)) {
-                        <div class="wrap-conversation" [ngClass]="{'right':item.sender !==interlocutors[indexCurrent]._id}" *ngIf="item.text !== ''">
-                            <div class="wrap-profile-photo" *ngIf="item.sender===interlocutors[indexCurrent]._id">
-                                @if (interlocutors[indexCurrent].photo !== null) {
-                                    <img src="{{interlocutors[indexCurrent].photo}}" alt="">
-                                } @else {
-                                    <img src="assets/photos/profile.png" alt="">
-                                }
-                            </div>
-                            <div class="wrap-message">
-                                <div *ngIf="item.sender===interlocutors[indexCurrent]._id">
-                                    {{interlocutors[indexCurrent].name}}
-                                </div>
-                                <div class="wrap-created">{{interlocutors[indexCurrent].created | date:'dd/MM/YYYY HH:mm:ss'}}</div>
-                                <div class="wrap-text" [innerHTML]="item.text" *ngIf="item.text !== ''"></div>
-                            </div>
-                        </div>
+                        @if (item.text !== '') {
+                            <app-chatmessage 
+                                [interlocutor]='interlocutors[indexCurrent]'
+                                [conversation]='item'
+                                [messageType]="'text'"
+                            ></app-chatmessage>
+                        } 
+                        @if (item.files.length !== 0) {
+                            <app-chatmessage 
+                                [interlocutor]='interlocutors[indexCurrent]'
+                                [conversation]='item'
+                                [messageType]="'file'"
+                            ></app-chatmessage>
+                        }
+                        
+                        <!--
+                        
                         @for (file of item.files; track file ; let key2 = $index) {
                             <div class="wrap-conversation" [ngClass]="{'right':item.sender !==interlocutors[indexCurrent]._id}">
                                 <div class="wrap-profile-photo" *ngIf="item.sender===interlocutors[indexCurrent]._id">
@@ -75,6 +76,7 @@
                                 </div>
                             </div>
                         }
+                            -->
                     }
                 }
             </section>

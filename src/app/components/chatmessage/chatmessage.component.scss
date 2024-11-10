@@ -1,0 +1,81 @@
+@import "../../../styles/utils";
+
+.wrap-conversation {
+    @include flex(flex-start, flex-start);
+    margin-bottom: 30px;
+    padding-right: 30%;
+    .wrap-profile-photo {
+        img {
+            width: 80px;
+            border-radius: 50%;
+        }
+    }
+    .wrap-message {
+        padding-left: 10px;
+        .wrap-created {
+            font-size:12px;
+            color:gray
+        }
+        .wrap-text {
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #b8b9ff;
+            clear: both;
+            word-wrap: break-word;
+            p {
+                margin-bottom: .3rem !important;
+            }
+        }
+        .wrap-image {
+            max-width: 500px;
+            margin-top: 10px;
+        }
+        .wrap-file {
+            .wrap {
+                @include flex(flex-start);
+                padding: 15px 20px;
+                background-color: gainsboro;
+                border-radius: 10px;
+                mat-icon {
+                    transform: scale(1.3);
+                }
+                mat-icon[fonticon="more_vert"] {
+                    cursor: pointer;
+                }
+                .file-name {
+                    max-width:230px;
+                    @include textOverflow();
+                    padding-left: 10px;
+                    padding-right: 10px;
+                }
+            }
+        }
+    }
+    &.right {
+        @include flex(flex-end, flex-start);
+        padding-right: 0 !important;
+        padding-left: 30%;
+        .wrap-created {
+            text-align: right;
+        }
+        .wrap-text {
+            background-color: gainsboro !important;
+            .wrap-image {
+                text-align: right;
+            }
+        }
+        .wrap-file {
+            @include flex(flex-end);
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .wrap-conversation {
+        padding-right: 10% !important;
+        &.right {
+            padding-right: 0 !important;
+            padding-left: 10% !important;
+        }
+    }
+}
