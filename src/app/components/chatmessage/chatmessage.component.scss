@@ -28,8 +28,10 @@
             margin-top: 10px;
         }
         .wrap-file {
+            @include flex(flex-start);
             .wrap {
                 @include flex(flex-start);
+                max-width: 300px;
                 padding: 15px 20px;
                 background-color: gainsboro;
                 border-radius: 10px;
@@ -73,6 +75,14 @@
         &.right {
             padding-right: 0 !important;
             padding-left: 10% !important;
+        }
+        .wrap-file {
+            .wrap {
+                max-width: 100% !important;
+                .file-name {
+                    max-width: 120px !important;
+                }
+            }
         }
     }
 }

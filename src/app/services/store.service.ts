@@ -54,4 +54,9 @@ export class StoreService {
     let tab = this.conversations$.getValue();
     this.conversations$.next([...tab, message]);
   }
+
+  addOldMessagesInConversations(messages:Conversation[]) {
+    let tab = this.conversations$.getValue();
+    this.conversations$.next([...messages, ...tab]);
+  }
 }

@@ -39,4 +39,13 @@ export class ApiService extends BaseService {
   postAddConversation(data: FormData): Observable<IResponseConversation> {
     return this.http.post<IResponseConversation>(`${this.baseUrl}/conversations`, data, this.getHttpOptionsAuth(null, true));
   }
+
+  getGetConversations(userId:string, conversationId?:string): Observable<{conversations:Conversation[]}>  {
+    let url = "";
+    if (conversationId !== null) {
+      url = `?last=${conversationId}`;
+    }
+
+    return this.http.get<{conversations:Conversation[]}>(`${this.baseUrl}/conversations/user/interlocutor/${userId}${url}`, this.getHttpOptionsAuth());
+  }
 }

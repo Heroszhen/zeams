@@ -90,13 +90,26 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     this.unlistener = this.renderer2.listen(this.listConversations.nativeElement, 'scroll', (e) => {
       if(e.target.scrollTop === 0 && this.appChatMessage.length > 0) {
-        const index = this.appChatMessage.first.dataIndex;
+        this.getConversations(this.appChatMessage.first.dataIndex)
       }
     });
   }
 
   ngOnDestroy() {
     this.unlistener()
+  }
+
+  getConversations(index:number) {
+    this.canScrollToBottom = false;
+    this.apiService.getGetConversations(this.interlocutors[this.indexCurrent]._id, this.conversations[index]._id).subscribe({
+      next: (data)=>{
+        this.storeService.addOldMessagesInConversations(data.conversations);
+        this.canScrollToBottom = true;
+      },
+      error:(err)=>{
+        this.canScrollToBottom = true;
+      }
+    });
   }
 
   getLastDate(id:string): string | null {
