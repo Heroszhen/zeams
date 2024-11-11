@@ -11,6 +11,6 @@ export class OrderByCreatedPipe implements PipeTransform {
       return value;
     }
 
-    return sortArrayByCreated([...value], 'asc');
+    return sortArrayByCreated([...value], direction);
   }
 }

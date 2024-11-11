@@ -2,6 +2,8 @@
 @import "../../../styles/_variables";
 
 $sectionInterlocutorsWidth: 300px;
+$headerHeight: 50px;
+
 #chat {
     height: 100vh;
     overflow: hidden;
@@ -9,13 +11,13 @@ $sectionInterlocutorsWidth: 300px;
     >section {
         height: inherit;
         .header {
-            height: 50px;
+            height: $headerHeight;
             @include flex(flex-start);
             padding: 5px;
             border-bottom: 1px solid rgb(231, 231, 231);
         }
         .body {
-            height: calc(100% - 50px);
+            height: calc(100% - $headerHeight);
             padding-top: 5px;
             padding-bottom: 5px;
         }
@@ -34,7 +36,7 @@ $sectionInterlocutorsWidth: 300px;
                 padding: 5px;
                 @include flex(flex-start);
                 cursor: pointer;
-                height: 50px;
+                height: $headerHeight;
                 >div {
                     height: inherit;
                     @include flex(flex-start);
@@ -70,6 +72,20 @@ $sectionInterlocutorsWidth: 300px;
     #section-conversations {
         width: calc(100% - $sectionInterlocutorsWidth);
         background-color: white;
+        .header {
+            @include flex(flex-start); 
+            >div {
+                height: inherit;
+                @include flex(flex-start);
+            }
+            .wrap-list-interlocutors {
+                @include flex();
+                width:$headerHeight;
+                mat-icon {
+                    transform: scale(2);
+                }
+            }
+        }
         .body {
             position: relative;
             #list-conversations {
@@ -146,3 +162,34 @@ $sectionInterlocutorsWidth: 300px;
         }
     }
 }
+
+::ng-deep .mat-menu-interlocutors .mat-menu-panel {
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f9f9f9; /* Example background color */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Shadow effect */
+}
+
+
+::ng-deep .mat-menu-interlocutors {
+    .interlocutor {
+        padding: 10px 5px;
+        &.active, &:hover {
+            background-color: #b4b4b4;
+        }
+        .wrap-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .wrap-date {
+            font-size: 13px;
+        }
+        .wrap-photo {
+            text-align: center;
+            img {
+                width: 50px;
+                height: 50px;
+            }
+        } 
+    }
+  }
