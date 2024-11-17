@@ -2,7 +2,7 @@
     <section id="section-interlocutors">
         <section class="header">Chat</section>
         <section class="body">
-            <div *ngFor="let item of interlocutors;let key = index;" class="interlocutor" [ngClass]="{'active': key === indexCurrent}" (click)="this.indexCurrent=key">
+            <div *ngFor="let item of interlocutors;let key = index;" class="interlocutor" [ngClass]="{'active': key === indexCurrent}" (click)="indexCurrent=key;resetMessageM()">
                 <div class="wrap-photo">
                     @if (item.photo !== null) {
                         <img src="{{item.photo}}" alt="">
@@ -26,7 +26,7 @@
                 <mat-icon aria-hidden="false" fontIcon="supervised_user_circle" [matMenuTriggerFor]="interlocutorsMenu" class="pointer d-md-none"></mat-icon>
                 <mat-menu #interlocutorsMenu="matMenu" class="mat-menu-interlocutors">
                     @for (item of interlocutors | orderByCreated: 'created': 'desc'; track item ; let key = $index) {
-                        <div mat-menu-item class="interlocutor" [ngClass]="{'active':indexCurrent===key}" (click)="this.indexCurrent=key">
+                        <div mat-menu-item class="interlocutor" [ngClass]="{'active':indexCurrent===key}" (click)="indexCurrent=key;resetMessageM()">
                             <div class="wrap-name">
                                 {{item.name}}
                             </div>
