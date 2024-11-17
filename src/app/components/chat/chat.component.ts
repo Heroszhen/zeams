@@ -1,7 +1,7 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, ViewChild, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef, AfterViewInit, OnDestroy, Renderer2, ViewChildren, QueryList } from '@angular/core';
 import { StoreService } from '../../services/store.service';
 import { IInterlocutor } from '../../interfaces/interfaces';
-import { sortArrayByCreated, wait } from '../../services/utils.service';
+import { sortArrayByCreated, wait, convertBytesToMo } from '../../services/utils.service';
 import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { Conversation } from '../../models/conversation';
 import { Profile } from '../../models/profile';
@@ -15,6 +15,7 @@ import { SocketService } from '../../services/socket.service';
 import {MatMenuModule} from '@angular/material/menu';
 import { ChatmessageComponent } from '../chatmessage/chatmessage.component';
 import { OrderByCreatedPipe } from '../../pipes/order-by-created.pipe';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-chat',
@@ -131,10 +132,16 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   handleInputFiles(event: Event) {
     const files = (event.target as HTMLInputElement)?.files;
+    let message = "";
     for(let i = 0; i < files.length; i++) {
+      if(convertBytesToMo(files.item(i).size) > environment.fileMaxSize) {
+        message += `${files.item(i).name}, `;
+        continue;
+      }
       if(this.messageM.files.length < 5)this.messageM.files.push(files.item(i));
       else break;
     }
+    if (message !== '')this.storeService.openSnackBar(`${message}  la taille de chaque fichier dépasse ${environment.fileMaxSize}Mo`, 20);
   }
 
   sendMessage() {

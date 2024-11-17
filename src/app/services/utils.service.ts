@@ -28,3 +28,13 @@ export function sortArrayByCreated <T extends {created: string}> (tab:T[], order
     else return new Date(next.created).getTime() - new Date(current.created).getTime();
   });
 }
+
+/**
+ * To convert bytes to megabytes (MB or Mo) using the binary system
+ */
+export function convertBytesToMo(bytes:number, decimals:number = 2):number {
+  if (bytes === 0) return 0;
+  const mbInBytes = Math.pow(2, 20); // 1 Mo = 2^20 bytes
+  const mo = bytes / mbInBytes;
+  return parseFloat(mo.toFixed(decimals));
+}
