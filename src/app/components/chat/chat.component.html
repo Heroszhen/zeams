@@ -44,8 +44,10 @@
                     }
                 </mat-menu>
             </div>
-            <div class="wrap-search"></div>
-            <div class="wrap-call"></div>
+            <div class="wrap-search">
+                <input type="search" class="form-control form-control-sm"  (input)="searchInterlocutors($event)">
+            </div>
+            <div class="wrap-call">dddd</div>
         </section>
         <section class="body">
             <section id="list-conversations" class="scrollbar" #listConversations>

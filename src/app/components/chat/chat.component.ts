@@ -54,6 +54,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   private unlistener!: () => void;
   canScrollToBottom:boolean = true;
   @ViewChildren('appChatMessage') appChatMessage!: QueryList<ChatmessageComponent>;
+  searchedInterlocutors:IInterlocutor[] = [];
 
   constructor(
     private readonly storeService: StoreService,
@@ -161,5 +162,12 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
       top: this.listConversations.nativeElement.scrollHeight,
       behavior: 'smooth'
     });
+  }
+
+  searchInterlocutors(e:Event) {
+    let value;
+    if (e instanceof InputEvent || Event) {
+      value = (e.target as HTMLInputElement).value;
+    }
   }
 }

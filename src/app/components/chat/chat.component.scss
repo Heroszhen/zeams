@@ -82,8 +82,16 @@ $headerHeight: 50px;
                 @include flex();
                 width:$headerHeight;
                 mat-icon {
-                    transform: scale(2);
+                    transform: scale(1.5);
                 }
+            }
+            .wrap-search {
+                width: calc(100% - $headerHeight - 100px);
+                padding-left: 5px;
+                padding-right: 7px;
+            }
+            .wrap-call {
+                width: 100px;
             }
         }
         .body {
@@ -178,7 +186,6 @@ $headerHeight: 50px;
             background-color: #b4b4b4;
         }
         .wrap-name {
-            font-size: 18px;
             font-weight: bold;
         }
         .wrap-date {
